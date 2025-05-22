@@ -45,14 +45,25 @@ void Widget::paintEvent(QPaintEvent *event){
     painter.setPen(QPen(Qt::black));
     //painter.setBrush(play->color);
     //painter.drawRect(play->x, play->y, play->size, play->size);
-    for (int i=0; i<NUM; i++){
+    for (QList<ball*>::iterator it = balls.begin(); it != balls.end(); ++it) {
+        painter.drawImage((*it)->point.x(),
+                          (*it)->point.y(),
+                          (*it)->img);
+        //balls.Iterator++;
+        //std::cout << " " << *it; // оператор * позволяет получить значение элемента, на которое указывает итератор
+    }
+
 
         //painter.setBrush(QBrush(balls[i]->GetColor()));
 
-        painter.drawImage(balls[i]->point.x(),
-                          balls[i]->point.y(),
-                          balls[i]->img);
-    }
+        //balls.Iterator();
+
+
+        //painter.drawImage((balls.Iterator*)->point.x(),
+                          //(balls.Iterator*)->point.y(),
+                          //(balls.Iterator*)->img);
+        //balls.Iterator++;
+    //}
     painter.drawImage(play->x, play->y, play->img);
 }
 void Widget::keyPressEvent(QKeyEvent *event){
@@ -95,38 +106,40 @@ void Widget::keyPressEvent(QKeyEvent *event){
 void Widget::Tick(){
     int tmpi=-1;
     ball* tmp=nullptr;
-    for(int i=0; i<NUM; i++){
-        if (play->CheckColision(balls[i])){
-            if (play->type!=balls[i]->type){
-                if (play->type==2 && balls[i]->type==1){
+    int i=0;
+    for (QList<ball*>::iterator it = balls.begin(); it != balls.end(); ++it) {
+
+        if (play->CheckColision(*it)){
+            if (play->type != (*it) -> type){
+                if (play->type==2 && (*it)->type==1){
                     tmpi=i;
-                    tmp=balls[i];
+                    tmp=(*it);
 
 
                 //1-ножницы, 2-камень, 3-бумага
-                } else if (play->type==2 && balls[i]->type==3){
+                } else if (play->type==2 && (*it)->type==3){
                     this->close();
-                } else if (play->type==3 && balls[i]->type==1){
+                } else if (play->type==3 && (*it)->type==1){
                     this->close();
-                } else if (play->type==3 && balls[i]->type==2){
+                } else if (play->type==3 && (*it)->type==2){
                     tmpi=i;
-                    tmp=balls[i];
-                } else if (play->type==1 && balls[i]->type==2){
+                    tmp=*it;
+                } else if (play->type==1 &&(*it)->type==2){
                     this->close();
-                } else if (play->type==1 && balls[i]->type==3){
+                } else if (play->type==1 && (*it)->type==3){
                     tmpi=i;
-                    tmp=balls[i];
+                    tmp=(*it);
                 }
             } else {
-                balls[i]->vx=-balls[i]->vx;
-                balls[i]->vy=-balls[i]->vy;
+                (*it)->vx=-(*it)->vx;
+                (*it)->vy=-(*it)->vy;
             }
         }
-        for(int j=0; j<NUM; j++){
-            balls[i]->CheckColision(balls[j]);
+        for(QList<ball*>::iterator ij = balls.begin(); ij != balls.end(); ++ij){
+            (*it)->CheckColision(*ij);
         }
-        balls[i]->move(width(), height());
-
+        (*it)->move(width(), height());
+        i++;
     }
     if (tmpi!=-1){
         qDebug()<<"Deleting";
