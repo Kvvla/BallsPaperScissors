@@ -53,7 +53,7 @@ void Widget::paintEvent(QPaintEvent *event){
                           balls[i]->point.y(),
                           balls[i]->img);
     }
-    painter.drawImage(play->x+50, play->y+50, play->img);
+    painter.drawImage(play->x, play->y, play->img);
 }
 void Widget::keyPressEvent(QKeyEvent *event){
     switch (event->key()) {

@@ -59,7 +59,7 @@ void Widget::on_play_button_clicked()
     ui->lcdNumber->show();
     ui->play_button->hide();
     ui->exit_button->hide();
-    ticktimer.start(30);
+    ticktimer.start(10);
     secTimer.start(1000);
     TickStart=true;
 

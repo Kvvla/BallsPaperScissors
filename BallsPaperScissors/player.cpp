@@ -17,21 +17,31 @@ bool player::CheckColision(ball *other){
     int y2=other->y;
     int r=other->size;
 
+    //сверху
+    if(x2<x+r && y2<y && y2>y-r && x2>x-size){
+        return true;
+    //down
+    } else if (y2>y && y2<y+r && x2>x-r && x2<x+r) return true;
+    //left
+    else if (x2>x-r && x2<x && y2<y+r && y2>y-r) return true;
+    //sprava
+    else if (x2<x+r && x2>x && y2>y-r && y2<y+r) return true;
+    else return false;
 
 
-    if (y-y2<r && y2<y && x2>x && x2<x+size){
+   /* if (y-y2-size<r && y2<y-size && x2>x-size && x2<x){
         return true;
         //слева
 
-    } else if ( x-x2<r && x2<x && y2>y && y2<y+size){
+    } else if ( x-x2-size<r && x2<x-size && y2>y-size && y2<y){
         return true;
         //снизу
-    } else if (x2>x && x2<x+size && y2-(y+size)<r && y2>y+size){
+    } else if (x2>x-size && x2<x && y2-(y)<r && y2>y){
         return true;
-
-    } else if (y2>y && y2<y+size && x2-(x+size)<r && x2>x+size){
+        //сверху
+    } else if (y2>y && y2<y && x2-(x)<r && x2>x){
         return true;
     }
 
-    else return false;
+    else return false;*/
 }
